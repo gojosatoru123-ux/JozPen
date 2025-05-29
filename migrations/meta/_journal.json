@@ -43,6 +43,20 @@
       "when": 1747413153109,
       "tag": "0005_massive_black_crow",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1747910280002,
+      "tag": "0006_tense_quicksilver",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1747919892449,
+      "tag": "0007_magical_blackheart",
+      "breakpoints": true
     }
   ]
 }

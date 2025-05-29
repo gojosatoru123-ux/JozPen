@@ -131,15 +131,15 @@ body {
   }
 
   .blog-form_input {
-    @apply border-[3px] border-black px-5 py-7 text-[18px] text-black font-semibold rounded-full mt-3 placeholder:text-black;
+    @apply border-[3px] border-black px-5 py-7 text-[18px] text-black font-semibold rounded-full mt-3 placeholder:font-semibold placeholder:text-gray-300;
   }
 
   .blog-form_textarea {
-    @apply border-[3px] border-black p-5 text-[18px] text-black font-semibold rounded-[20px] mt-3 placeholder:text-black;
+    @apply border-[3px] border-black p-5 text-[18px] text-black font-semibold rounded-[20px] mt-3 placeholder:font-semibold placeholder:text-gray-300;
   }
 
   .blog-form_editor {
-    @apply mt-3 border-[3px] border-black text-[18px] text-black font-semibold placeholder:text-black;
+    @apply mt-3 p-0  border-[3px] border-black text-[18px] text-black font-semibold placeholder:text-black;
   }
 
   .blog-form_btn {
@@ -197,6 +197,7 @@ body {
 
 .tiptap {
   margin-top: 1rem;
+  min-height: 360px;
 }
 
 .tiptap :first-child {

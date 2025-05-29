@@ -13,10 +13,10 @@ const Footer = () => {
         {/* Logo + Description */}
         <div>
           <Link href="/" className="inline-block mb-4">
-            <Image src="/logo.png" alt="Logo" width={140} height={30} />
+            <Image src="/logo_footer.png" alt="Logo" width={140} height={30} />
           </Link>
           <p className="text-sm text-gray-400 max-w-xs">
-            Empowering insights with creative technology — one blog at a time.
+          We’re building more than a platform — we’re building a space where knowledge meet people.
           </p>
         </div>
 
@@ -75,7 +75,7 @@ const Footer = () => {
 
       {/* Bottom Bar */}
       <div className="relative z-10 border-t border-white/10 py-4 text-center text-xs text-gray-500">
-        &copy; 2025 YourBrand — All rights reserved.
+        &copy; 2025 JozPen — All rights reserved.
       </div>
     </footer>
         </>

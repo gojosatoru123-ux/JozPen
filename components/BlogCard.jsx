@@ -8,6 +8,8 @@ import Modal from "./model";
 import MessageSlab from "./MessageSlab";
 import Loader from "./Loader";
 import { useRouter } from "next/navigation";
+import { deleteBlogApi } from "@/lib/api"
+
 
 const BlogCard = ({ post, setRemoved = null, isMyProfile = false }) => {
     const [bookmark, setBookmark] = useState(false);
@@ -52,13 +54,7 @@ const BlogCard = ({ post, setRemoved = null, isMyProfile = false }) => {
     const handleConfirm = async () => {
         try {
             setLoading(true)
-            const res = await fetch(`/api/blog/deleteblog?id=${selectedId}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            const data = await res.json()
+            const data=await deleteBlogApi(selectedId)
             if (data.success) {
                 setError({ message: "Blog Deleted Successfully. Refresh the page", type: 'success', url: null });
             }

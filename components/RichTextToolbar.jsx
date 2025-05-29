@@ -47,6 +47,7 @@ import {
     TableRowsSplit,
     Rows3,
     Square,
+    Image,
 } from "lucide-react";
 
 const ToolbarButton = ({
@@ -320,9 +321,9 @@ const RichTextToolbar = ({ editor }) => {
 
             <button
             onClick={triggerFileSelect}
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+            className="bg-blue-400 rounded-xl px-2 cursor-pointer"
           >
-            Upload Image
+            <Image size={16} />
           </button>
           <input
             type="file"

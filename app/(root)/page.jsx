@@ -10,10 +10,9 @@ export default async function Home({ searchParams }) {
     <>
       <section className="pink_container pattern">
         <p className="tag">READ,WRITE AND LEARN</p>
-        <h1 className="heading">Read and Learn,<br /> Anything with Ease</h1>
+        <h1 className="heading">"For the thinkers, ranters, and midnight typers"</h1>
         <p className="sub-heading !max-w-3xl">
-          Submit Ideas, Vote on Pitches, and Get Noticed in Virtual
-          Competitions.
+        A platform for thinkers, feelers, overthinkers, and under-sharers. Whether you’re ranting, reflecting, or storytelling — this is your space to be heard without being boxed in.
         </p>
         <SearchForm query={query} />
       </section>

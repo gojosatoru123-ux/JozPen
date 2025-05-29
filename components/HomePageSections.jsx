@@ -3,18 +3,15 @@ import Image from "next/image";
 import SearchedBlogs from "./SearchedBlogs";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { homePageSectionApi } from "@/lib/api";
 
 const HomePageSections = async () => {
     let mainData
 
     try {
-        const mainRes = await fetch(`http://localhost:3000/api/blog/home/main`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        mainData = (await mainRes.json()).blogs[0]
+        
+        const res=await homePageSectionApi()
+        mainData=res.blogs[0]
     }
     catch (error) {
         return notFound()

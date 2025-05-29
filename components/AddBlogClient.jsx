@@ -172,15 +172,44 @@ const AddBlogClient = ({ session, initialContent = null, isUpdate = false }) => 
         },
         editorProps: {
             handleKeyDown(view, event) {
-                if (event.key === "ArrowDown") {
-                    setShow(!show);
+                const isCtrlOrCmd = event.metaKey || event.ctrlKey;
+
+                if (event.key === "ArrowDown" && isCtrlOrCmd) {
+                    view.dom.dataset.forceShow = "true"; // set custom flag on editor DOM
+                    setShow(true);
                     return true;
-                } else {
-                    setShow(false);
                 }
+
                 return false;
             },
-        },
+
+            handleDOMEvents: {
+                mouseup(view) {
+                    // Prevent flicker caused by mouseup after Cmd+ArrowDown
+                    if (view.dom.dataset.forceShow === "true") {
+                        view.dom.dataset.forceShow = "false";
+                        return false;
+                    }
+
+                    const isTextSelected = !view.state.selection.empty;
+                    setShow(isTextSelected);
+                    return false;
+                },
+
+                keyup(view) {
+                    // Prevent flicker caused by keyup after Cmd+ArrowDown
+                    if (view.dom.dataset.forceShow === "true") {
+                        view.dom.dataset.forceShow = "false";
+                        return false;
+                    }
+
+                    const isTextSelected = !view.state.selection.empty;
+                    setShow(isTextSelected);
+                    return false;
+                },
+            }
+        }
+
     });
 
     const handleSubmit = async (e) => {
@@ -195,12 +224,12 @@ const AddBlogClient = ({ session, initialContent = null, isUpdate = false }) => 
             if (thumbnail) form.append('thumbnail', thumbnail);
             let res;
 
-            if(isUpdate){
+            if (isUpdate) {
                 res = await fetch(`/api/blog/update?id=${initialContent.blogs.id}`, {
                     method: 'PUT',
                     body: form,
                 });
-            }else{
+            } else {
                 res = await fetch('/api/blog/add', {
                     method: 'POST',
                     body: form,
@@ -247,6 +276,7 @@ const AddBlogClient = ({ session, initialContent = null, isUpdate = false }) => 
                     <label htmlFor="content" className="blog-form_label">
                         Content
                     </label>
+                    <p className='text-gray-400'>ctrl+ArrowDown or select text to format</p>
                     <EditorContent
                         editor={editor}
                         className="min-h-[360px] border-2 p-2 rounded blog-form_editor tiptap"
@@ -257,14 +287,60 @@ const AddBlogClient = ({ session, initialContent = null, isUpdate = false }) => 
                 <Input name="tags" id="tags" placeholder="Tags (comma-separated)" defaultValue={initialContent ? initialContent.blogs.tags : null} className="blog-form_input" />
 
                 <label htmlFor="categories" className="blog-form_label">Categories</label>
-                <Input name="categories" id="categories" placeholder="Categories" defaultValue={initialContent ? initialContent.blogs.categories : null} className="blog-form_input" />
+                <select name="categories"
+                    id="categories"
+                    defaultValue={initialContent ? initialContent.blogs.categories : ""}
+                    className="border-[3px] border-black px-5 py-5 text-[18px] w-full rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700">
+                    <option value="" disabled>
+                        -- Select an option --
+                    </option>
+                    <option value="Literature">Literature</option>
+                    <option value="Technology">Technology</option>
+                    <option value="Science">Science</option>
+                    <option value="Programming">Programming</option>
+                    <option value="Computer Science">Computer Science</option>
+                    <option value="Lifestyle">LifeStyle</option>
+                    <option value="Business">Business</option>
+                </select>
 
-                <label className="blog-form_label">Thumbnail Image:
-                    <Input type="file" accept="image/*" onChange={(e) => setThumbnail(e.target.files?.[0] || null)} />
-                </label>
+                <div className="flex flex-col items-start gap-2">
+                    <label htmlFor="thumbnail-upload" className="blog-form_label">
+                        Upload Thumbnail
+                    </label>
+
+                    <input
+                        id="thumbnail-upload"
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={(e) => setThumbnail(e.target.files?.[0] || null)}
+                    />
+
+                    <label
+                        htmlFor="thumbnail-upload"
+                        className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl cursor-pointer hover:bg-blue-700 transition duration-200 shadow-md"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-5 w-5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1M12 12v6m0 0l-3-3m3 3l3-3M12 4v8"
+                            />
+                        </svg>
+                        Choose Image
+                    </label>
+                </div>
+
                 <img src={thumbnail ? URL.createObjectURL(thumbnail) : initialContent ? initialContent.blogs.thumbnailUrl : null} alt="Thumbnail" className="object-cover rounded my-2 p-4 w-40 h-40" />
 
-                <Button type="submit" className="blog-form_btn my-4">Submit Blog</Button>
+                <Button type="submit" className="blog-form_btn cursor-pointer my-4">{isUpdate?"Update Blog":"Submit Blog"}</Button>
             </form>
 
             {loading && <Loader />}

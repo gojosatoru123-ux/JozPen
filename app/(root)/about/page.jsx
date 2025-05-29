@@ -120,8 +120,8 @@ export default async function About() {
                 <div className="max-w-4xl mx-auto text-center">
                     <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Share Your Ideas?</h2>
                     <p className="text-lg text-pink-100 mb-10 max-w-2xl mx-auto">
-                        Join thousands of writers who have already found their voice on our platform.
-                        Start writing today and connect with a community that values your perspective.
+                    A platform for thinkers, feelers, overthinkers, and under-sharers. Whether you’re ranting, reflecting, or storytelling — this is your space to be heard without being boxed in.
+
                     </p>
                     <div className="flex flex-row gap-4 justify-center flex-wrap">
                         {session && session?.user ? <>

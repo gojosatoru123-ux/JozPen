@@ -3,48 +3,52 @@ import { useEffect, useState } from "react";
 import BlogCard from "./BlogCard";
 import { useInView } from "react-intersection-observer";
 import Loader2 from "./Loader2";
+import { getMyBlogsApi } from "@/lib/api";
+import MessageSlab from "./MessageSlab";
 
-const MyBlogs = ({id,isMyProfile}) => {
+const MyBlogs = ({ id, isMyProfile }) => {
     const [blogs, setBlogs] = useState([])
-    const [pageno,setPageno]=useState(1)
-    const [loading,setLoading]=useState(false)
-    const [fetching,setFetching]=useState(false)
-    const [ended,setEnded]=useState(false)
-    const [ref, inView]= useInView({threshold:0.8})
+    const [pageno, setPageno] = useState(1)
+    const [loading, setLoading] = useState(false)
+    const [fetching, setFetching] = useState(false)
+    const [ended, setEnded] = useState(false)
+    const [error, setError] = useState(null)
+    const [ref, inView] = useInView({ threshold: 0.8 })
     const fetchBlogs = async (pageno) => {
-        if(fetching || ended) return;
+        if (fetching || ended) return;
         setFetching(true)
         setLoading(true)
-        const res = await fetch(`/api/blog/myBlogs?pageno=${pageno}&id=${id}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        const data = await res.json();
-        if (data.success) {
-            if(data.blogs.length==0){
-                setEnded(true);
-            }
-            else{
-                setBlogs(prevBlogs=>[...prevBlogs,...data.blogs]);
-                setPageno(pageno+1);
+        try {
+            const data = await getMyBlogsApi(pageno, id)
+            if (data.success) {
+                if (data.blogs.length == 0) {
+                    setEnded(true);
+                }
+                else {
+                    setBlogs(prevBlogs => [...prevBlogs, ...data.blogs]);
+                    setPageno(pageno + 1);
+                }
             }
         }
-        setLoading(false)
-        setFetching(false)
+        catch (error) {
+            setError({ message: error.message, type: 'error', url: null });
+        } finally {
+            setLoading(false)
+            setFetching(false)
+        }
     }
     useEffect(() => {
-        if(inView){
+        if (inView) {
             fetchBlogs(pageno);
         }
     }, [inView])
     return (
         <>
+            {error && <MessageSlab type={error.type} message={error.message} url={error.url} />}
             <ul className="card_grid-sm">
-                {blogs && blogs.map((blog) => <BlogCard key={blog.blogs.id} post={blog} isMyProfile={isMyProfile}></BlogCard>)}
+                {blogs && blogs.map((blog,index) => <BlogCard key={index} post={blog} isMyProfile={isMyProfile}></BlogCard>)}
                 {loading && <li className="flex justify-center items-center"><Loader2></Loader2></li>}
-                <div ref={ref} style={{height:'20px'}}></div>
+                <div ref={ref} style={{ height: '20px' }}></div>
             </ul>
         </>
     )

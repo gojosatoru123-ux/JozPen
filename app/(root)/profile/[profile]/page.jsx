@@ -1,6 +1,7 @@
 // 'use client'
 
 import { auth } from "@/auth"
+import FollowUnfollow from "@/components/followUnfollow";
 import MyBlogs from "@/components/MyBlogs";
 import { db } from "@/database/drizzle";
 import { usersTable } from "@/database/schema";
@@ -35,6 +36,8 @@ export default async function Profile({ params }) {
                     </div>
                     <Image src={userData.profileUrl} alt={userData.name} width={220} height={220} className="profile_image"></Image>
                     <p className="font-extrabold mt-7 text-center text-black">@{userData.name}</p>
+                    {session?.id === id ? null : <FollowUnfollow userId={id}/>}
+                    
                 </div>
                 <div className="flex-1 flex flex-col gap-5 lg:-mt-5">
                     <p className="text-30-bold">{session?.id === id ? "Your" : "All"} Blogs</p>

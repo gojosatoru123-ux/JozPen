@@ -6,6 +6,7 @@ import { blogs } from '@/database/schema';
 import { db } from '@/database/drizzle';
 import { NextResponse } from 'next/server';
 import { auth } from '@/auth';
+import { put } from '@vercel/blob';
 
 export async function POST(req) {
   const session = await auth();
@@ -31,9 +32,11 @@ export async function POST(req) {
     const ext = path.extname(file.name);
     const filename = `${uuidv4()}${ext}`;
     const buffer = Buffer.from(await file.arrayBuffer());
-    const filepath = path.join(uploadDir, filename);
-    await writeFile(filepath, buffer);
-    return `/uploads/${filename}`;
+    const blob = await put(`jozpen/uploads/${filename}`, buffer, {
+      access: 'public',
+      addRandomSuffix: true,
+    });
+    return blob.url;
   };
 
   const thumbnail = formData.get('thumbnail');

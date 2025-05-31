@@ -32,7 +32,7 @@ export async function generateMetadata({ params }) {
     openGraph: {
       title: data.blogs.title,
       description: data.blogs.excerpt,
-      url: `https://localhost:3000/blog/${id}`,
+      url: `https://joz-pen.vercel.app/blog/${id}`,
       type: "article",
       images: [
         {
@@ -50,7 +50,7 @@ export async function generateMetadata({ params }) {
       images: [data.blogs.thumbnailUrl],
     },
     alternates: {
-      canonical: `https://localhost:3000/blog/${id}`,
+      canonical: `https://joz-pen.vercel.app/blog/${id}`,
     },
   };
 }

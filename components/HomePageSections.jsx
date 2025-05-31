@@ -1,23 +1,43 @@
+'use client'
 import { categories } from "@/lib/utils";
 import Image from "next/image";
 import SearchedBlogs from "./SearchedBlogs";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { homePageSectionApi } from "@/lib/api";
+import { useEffect, useState } from "react";
+import Loader2 from "./Loader2";
+import MessageSlab from "./MessageSlab";
 
-const HomePageSections = async () => {
-    let mainData
+const HomePageSections = () => {
+    const [mainData,setMainData]=useState()
+    const [loading,setLoading]=useState(true)
+    const [fetching,setFetching]=useState(false)
+    const [error,setError]=useState(null)
+    useEffect(() => {
+        const fetchData=async ()=>{
+            if(fetching) return;
+            setFetching(true);
+            setLoading(true);
+            try {
+                const res=await homePageSectionApi()
+                setMainData(res.blogs[0])
+            }
+            catch (error) {
+                setError({ message: error.message, type: 'error', url: null });
+            }finally{
+                setLoading(false);
+                setFetching(false);
+            }
+        }
+        fetchData();
+    },[])
 
-    try {
-        
-        const res=await homePageSectionApi()
-        mainData=res.blogs[0]
-    }
-    catch (error) {
-        return notFound()
-    }
     return (
         <>
+            {loading && <Loader2/>}
+            {error && <MessageSlab type={error.type} message={error.message} url={error.url} />}
+            {mainData && <>
             <section>
                 <h2 className="font-extrabold text-3xl">Featured Posts</h2>
 
@@ -94,6 +114,7 @@ const HomePageSections = async () => {
                 <h2 className="font-extrabold text-3xl">Trending</h2>
                 <SearchedBlogs query={''} once={true} totalblogsonpage={4}></SearchedBlogs>
             </section>
+            </>}
         </>
     )
 }

@@ -1,12 +1,8 @@
 // app/api/blog/add/route.js
-import { writeFile } from 'fs/promises';
-import path from 'path';
-import { v4 as uuidv4 } from 'uuid';
-import { blogs } from '@/database/schema';
-import { db } from '@/database/drizzle';
-import { NextResponse } from 'next/server';
 import { auth } from '@/auth';
-import { put } from '@vercel/blob';
+import { db } from '@/database/drizzle';
+import { blogs } from '@/database/schema';
+import { NextResponse } from 'next/server';
 
 export async function POST(req) {
   const session = await auth();
@@ -24,22 +20,23 @@ export async function POST(req) {
   const content = getField('content');
   const tags = getField('tags');
   const categories = getField('categories');
+  const thumbnailUrl = getField('thumbnail-upload');
 
-  const uploadDir = path.join(process.cwd(), 'public/uploads');
+  // const uploadDir = path.join(process.cwd(), 'public/uploads');
 
-  const saveImage = async (file) => {
-    if (!file) return '';
-    const ext = path.extname(file.name);
-    const filename = `${uuidv4()}${ext}`;
-    const buffer = Buffer.from(await file.arrayBuffer());
-    const blob = await put(`jozpen/uploads/${filename}`, buffer, {
-      access: 'public',
-      addRandomSuffix: true,
-    });
-    return blob.url;
-  };
+  // const saveImage = async (file) => {
+  //   if (!file) return '';
+  //   const ext = path.extname(file.name);
+  //   const filename = `${uuidv4()}${ext}`;
+  //   const buffer = Buffer.from(await file.arrayBuffer());
+  //   const blob = await put(`jozpen/uploads/${filename}`, buffer, {
+  //     access: 'public',
+  //     addRandomSuffix: true,
+  //   });
+  //   return blob.url;
+  // };
 
-  const thumbnail = formData.get('thumbnail');
+  // const thumbnail = formData.get('thumbnail');
 
 
 
@@ -47,7 +44,7 @@ export async function POST(req) {
 
   const readingTime = Math.ceil(content.length / 300); // naive estimate
   try {
-    const thumbnailUrl = await saveImage(thumbnail);
+    // const thumbnailUrl = await saveImage(thumbnail);
     await db.insert(blogs).values({
       title,
       slug,

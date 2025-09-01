@@ -1,10 +1,10 @@
 import Recommended from "@/components/Recommended"
-import { Clock, Dot } from "lucide-react"
-import Image from "next/image"
-import Link from "next/link"
 import { db } from "@/database/drizzle"
 import { blogs, usersTable } from "@/database/schema"
 import { eq } from "drizzle-orm"
+import { Clock, Dot } from "lucide-react"
+import Image from "next/image"
+import Link from "next/link"
 import { notFound } from "next/navigation"
 
 
@@ -85,7 +85,8 @@ export default async function Blog({ params }) {
       </section>
       <section className="section_container flex justify-center">
         <img
-          src={data.blogs.thumbnailUrl}
+          // src={data.blogs.thumbnailUrl}
+          src={data.blogs.thumbnailUrl ? data.blogs.thumbnailUrl : '/thumbnailUrl.png'}
           alt="thumbnail"
           className="w-full sm:h-[400px] sm:w-auto h-auto rounded-xl"
         />

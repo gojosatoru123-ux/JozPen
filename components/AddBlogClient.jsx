@@ -221,7 +221,7 @@ const AddBlogClient = ({ session, initialContent = null, isUpdate = false }) => 
             e.preventDefault();
             const form = new FormData(e.target);
             form.append('content', content);
-            if (thumbnail) form.append('thumbnail', thumbnail);
+            // if (thumbnail) form.append('thumbnail', thumbnail);
             let res;
 
             if (isUpdate) {
@@ -303,7 +303,7 @@ const AddBlogClient = ({ session, initialContent = null, isUpdate = false }) => 
                     <option value="Business">Business</option>
                 </select>
 
-                <div className="flex flex-col items-start gap-2">
+                {/* <div className="flex flex-col items-start gap-2">
                     <label htmlFor="thumbnail-upload" className="blog-form_label">
                         Upload Thumbnail
                     </label>
@@ -337,9 +337,15 @@ const AddBlogClient = ({ session, initialContent = null, isUpdate = false }) => 
                         Choose Image
                     </label>
                     <p className='text-gray-400'>Max File Size 4 MB-jpeg, png, gif allowed only</p>
-                </div>
+                </div> */}
 
-                <img src={thumbnail ? URL.createObjectURL(thumbnail) : initialContent ? initialContent.blogs.thumbnailUrl : null} alt="Thumbnail" className="object-cover rounded my-2 p-4 w-40 h-40" />
+                 <label htmlFor="thumbnail-upload" className="blog-form_label">Thumbnail</label>
+                <Input name="thumbnail-upload" id="thumbnail-upload" placeholder="thumbnail-upload" defaultValue={initialContent ? initialContent.blogs.thumbnailUrl : null} onChange={(e) => setThumbnail(e.target.value)} className="blog-form_input" />
+
+
+
+                {/* <img src={thumbnail ? URL.createObjectURL(thumbnail) : initialContent ? initialContent.blogs.thumbnailUrl : null} alt="Thumbnail" className="object-cover rounded my-2 p-4 w-40 h-40" /> */}
+                <img src={thumbnail ? thumbnail : initialContent ? initialContent.blogs.thumbnailUrl : null} alt="Thumbnail" className="object-cover rounded my-2 p-4 w-40 h-40" />
 
                 <Button type="submit" className="blog-form_btn cursor-pointer my-4">{isUpdate?"Update Blog":"Submit Blog"}</Button>
             </form>

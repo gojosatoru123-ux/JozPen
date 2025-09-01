@@ -48,7 +48,7 @@ const HomePageSections = () => {
                     {/* Thumbnail Image */}
                     <div className="relative z-10 h-64 sm:h-80 md:h-96 w-full rounded-xl overflow-hidden shadow-xl">
                         <Image
-                            src={mainData.blogs.thumbnailUrl}
+                            src={mainData.blogs.thumbnailUrl ? mainData.blogs.thumbnailUrl : '/thumbnailUrl.png'}
                             alt={mainData.blogs.title}
                             fill
                             className="rounded-xl object-cover"

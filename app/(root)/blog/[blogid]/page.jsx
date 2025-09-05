@@ -6,6 +6,7 @@ import { Clock, Dot } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
+import TableOfContents from "@/components/tableOfContents"
 
 
 export async function generateMetadata({ params }) {
@@ -77,6 +78,7 @@ export default async function Blog({ params }) {
   const data = res[0]
   return (
     <>
+    
       <section className="pink_container pattern">
         <p className="tag">{new Date(data.blogs.createdAt).toDateString()}</p>
 
@@ -132,8 +134,8 @@ export default async function Blog({ params }) {
           </div>
         </div>
       </div>
-      
-      <section className="flex justify-center items-center">
+      <section className="flex gap-2 justify-center">
+        <TableOfContents htmlContent={data.blogs.content}/>
         <article
           className="max-w-4xl p-2 pb-4 border-dotted border-b-2 border-gray-300 tiptap"
           dangerouslySetInnerHTML={{ __html: data.blogs.content }}

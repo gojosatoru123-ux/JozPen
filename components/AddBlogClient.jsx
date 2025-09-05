@@ -53,7 +53,7 @@ lowlight.register("ts", ts);
 
 const AddBlogClient = ({ session, initialContent = null, isUpdate = false }) => {
     const [thumbnail, setThumbnail] = useState(null);
-    const [content, setContent] = useState('');
+    const [content, setContent] = useState(initialContent ? initialContent.blogs.content : '');
     const [show, setShow] = useState(false);
     const [loading, setLoading] = useState(false);
     const [uploading, setUploading] = useState(false);

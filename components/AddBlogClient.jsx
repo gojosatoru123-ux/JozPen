@@ -1,46 +1,46 @@
 'use client';
 
-import { useState } from 'react';
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Button } from '@/components/ui/button';
+import { useState } from 'react';
 
-import { useEditor, EditorContent } from "@tiptap/react";
+import { EditorContent, useEditor } from "@tiptap/react";
 
-import Document from "@tiptap/extension-document";
-import Heading from "@tiptap/extension-heading";
-import Paragraph from "@tiptap/extension-paragraph";
-import Text from "@tiptap/extension-text";
-import TextAlign from "@tiptap/extension-text-align";
 import Blockquote from "@tiptap/extension-blockquote";
+import Bold from "@tiptap/extension-bold";
 import BulletList from "@tiptap/extension-bullet-list";
-import ListItem from "@tiptap/extension-list-item";
 import CodeBlock from "@tiptap/extension-code-block";
+import Document from "@tiptap/extension-document";
+import Dropcursor from "@tiptap/extension-dropcursor";
+import Heading from "@tiptap/extension-heading";
 import HorizontalRule from "@tiptap/extension-horizontal-rule";
+import Image from "@tiptap/extension-image";
+import Italic from "@tiptap/extension-italic";
+import Link from "@tiptap/extension-link";
+import ListItem from "@tiptap/extension-list-item";
 import OrderedList from "@tiptap/extension-ordered-list";
+import Paragraph from "@tiptap/extension-paragraph";
+import Strike from "@tiptap/extension-strike";
+import Subscript from "@tiptap/extension-subscript";
+import Superscript from "@tiptap/extension-superscript";
 import Table from "@tiptap/extension-table";
 import TableCell from "@tiptap/extension-table-cell";
 import TableHeader from "@tiptap/extension-table-header";
 import TableRow from "@tiptap/extension-table-row";
-import Bold from "@tiptap/extension-bold";
-import Italic from "@tiptap/extension-italic";
+import Text from "@tiptap/extension-text";
+import TextAlign from "@tiptap/extension-text-align";
 import Underline from "@tiptap/extension-underline";
-import Strike from "@tiptap/extension-strike";
-import Subscript from "@tiptap/extension-subscript";
-import Superscript from "@tiptap/extension-superscript";
-import Link from "@tiptap/extension-link";
-import Image from "@tiptap/extension-image";
-import Dropcursor from "@tiptap/extension-dropcursor";
 
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import { common, createLowlight } from "lowlight";
 
+import RichTextToolbar from '@/components/RichTextToolbar';
 import Highlight from "@tiptap/extension-highlight";
 import css from "highlight.js/lib/languages/css";
 import js from "highlight.js/lib/languages/javascript";
 import ts from "highlight.js/lib/languages/typescript";
 import html from "highlight.js/lib/languages/xml";
-import RichTextToolbar from '@/components/RichTextToolbar';
 import Loader from './Loader';
 import MessageSlab from './MessageSlab';
 
@@ -261,94 +261,174 @@ const AddBlogClient = ({ session, initialContent = null, isUpdate = false }) => 
             {show && <RichTextToolbar editor={editor} />}
             {error && <MessageSlab type={error.type} message={error.message} url={error.url} />}
 
-            <form onSubmit={handleSubmit} className="blog-form p-4">
-                {isUpdate && <h2 className='tag flex justify-center'>Update Article</h2>}
-                <label htmlFor="title" className="blog-form_label">Title</label>
-                <Input name="title" id="title" placeholder="Title" defaultValue={initialContent ? initialContent.blogs.title : null} className="blog-form_input" required />
+        <form
+        onSubmit={handleSubmit}
+        className="blog-form bg-white dark:bg-black shadow-2xl rounded-2xl p-6 sm:p-8 space-y-8 max-w-4xl mx-auto"
+        >
+        {/* Form Header */}
+        <div className="text-center">
+            <h1 className="text-3xl font-bold text-black dark:text-white">
+            {isUpdate ? 'Update Article' : 'Create a New Article'}
+            </h1>
+            <p className="mt-2 text-lg text-gray-800 dark:text-gray-700">
+            Fill out the details below to {isUpdate ? 'update your' : 'publish a new'} article.
+            </p>
+        </div>
 
-                <label htmlFor="slug" className="blog-form_label">Slug</label>
-                <Input name="slug" id="slug" placeholder="Slug" defaultValue={initialContent ? initialContent.blogs.slug : null} className="blog-form_input" required />
+        {/* Section 1: Core Information */}
+        <div className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Title Input */}
+            <div>
+                <label htmlFor="title" className="block text-md font-medium text-black dark:text-gray-600 mb-2">
+                Title
+                </label>
+                <Input
+                name="title"
+                id="title"
+                placeholder="e.g., The Future of AI"
+                defaultValue={initialContent?.blogs.title}
+                className="form-input"
+                required
+                />
+            </div>
 
-                <label htmlFor="excerpt" className="blog-form_label">Excerpt</label>
-                <Textarea name="excerpt" id="excerpt" defaultValue={initialContent ? initialContent.blogs.excerpt : null} placeholder="Excerpt" className="blog-form_textarea" />
+            {/* Slug Input */}
+            <div>
+                <label htmlFor="slug" className="block text-md font-medium text-black dark:text-gray-600 mb-2">
+                Slug
+                </label>
+                <Input
+                name="slug"
+                id="slug"
+                placeholder="e.g., the-future-of-ai"
+                defaultValue={initialContent?.blogs.slug}
+                className="form-input"
+                required
+                />
+            </div>
+            </div>
 
-                <div data-color-mode="light">
-                    <label htmlFor="content" className="blog-form_label">
-                        Content
-                    </label>
-                    <p className='text-gray-400'>ctrl+ArrowDown or select text to format</p>
-                    <EditorContent
-                        editor={editor}
-                        className="min-h-[360px] border-2 p-2 rounded blog-form_editor tiptap"
-                    />
+            {/* Excerpt Textarea */}
+            <div>
+            <label htmlFor="excerpt" className="block text-md font-medium text-black dark:text-gray-600 mb-2">
+                Excerpt
+            </label>
+            <Textarea
+                name="excerpt"
+                id="excerpt"
+                defaultValue={initialContent?.blogs.excerpt}
+                placeholder="A short summary of the article..."
+                className="form-textarea"
+                rows={3}
+            />
+            </div>
+
+            {/* Expiration Date */}
+            <div>
+            <label htmlFor="expireAt" className="block text-md font-medium text-black dark:text-gray-600 mb-2">
+                Expiration Date (Optional)
+            </label>
+            <input
+                type="datetime-local"
+                name="expireAt"
+                id="expireAt"
+                defaultValue={initialContent?.blogs.expireAt ? new Date(initialContent.blogs.expireAt).toISOString().slice(0, 16) : ''}
+                className="form-input"
+            />  
+            </div>
+        </div>
+
+        {/* Section 2: Content Editor */}
+        <div data-color-mode="light">
+            <label htmlFor="content" className="block text-md font-medium text-black dark:text-gray-600 mb-2">
+            Content
+            </label>
+            <p className="text-xs text-gray-800 mb-2">Tip: Select text to see formatting options.</p>
+            <div className="prose dark:prose-invert max-w-none">
+            <EditorContent
+                editor={editor}
+                className="min-h-[360px] p-4 tiptap blog-form_editor"
+            />
+            </div>
+        </div>
+
+        {/* Section 3: Metadata */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Tags Input */}
+            <div>
+            <label htmlFor="tags" className="block text-md font-medium text-black dark:text-gray-600 mb-2">
+                Tags
+            </label>
+            <Input
+                name="tags"
+                id="tags"
+                placeholder="react, tailwind, webdev"
+                defaultValue={initialContent?.blogs.tags}
+                className="form-input"
+            />
+            <p className="text-xs text-gray-800 mt-1">Comma-separated values.</p>
+            </div>
+
+            {/* Categories Select */}
+            <div>
+            <label htmlFor="categories" className="block text-md font-medium text-black dark:text-gray-600 mb-2">
+                Category
+            </label>
+            <select
+                name="categories"
+                id="categories"
+                defaultValue={initialContent?.blogs.categories || ""}
+                className="form-select dark:text-gray-600 mb-2"
+            >
+                <option value="" disabled>-- Select a category --</option>
+                <option value="Literature">Literature</option>
+                <option value="Technology">Technology</option>
+                <option value="Science">Science</option>
+                <option value="Programming">Programming</option>
+                <option value="Computer Science">Computer Science</option>
+                <option value="Lifestyle">Lifestyle</option>
+                <option value="Business">Business</option>
+            </select>
+            </div>
+        </div>
+
+        {/* Section 4: Thumbnail Upload */}
+        <div>
+            <label className="block text-md font-medium text-black dark:text-gray-600 mb-2">
+                Thumbnail Image
+            </label>
+            <div className="mt-2 flex items-center gap-x-4">
+                <img 
+                src={thumbnail ? thumbnail : initialContent ? initialContent.blogs.thumbnailUrl : null} 
+                alt="Thumbnail Preview" 
+                className="h-24 w-24 rounded-lg object-cover dark:text-gray-600 border border-gray-300 dark:border-gray-800"
+                />
+                <div className="flex-grow">
+                <label htmlFor="thumbnail-url" className="sr-only">Thumbnail URL</label>
+                <Input 
+                    name="thumbnail-upload"
+                    id="thumbnail-upload"
+                    placeholder="https://example.com/image.png"
+                    defaultValue={initialContent?.blogs.thumbnailUrl}
+                    onChange={(e) => setThumbnail(e.target.value)}
+                    className="form-input"
+                />
+                <p className="text-xs text-gray-800 mt-1">Paste a URL for the article's thumbnail.</p>
                 </div>
+            </div>
+        </div>
 
-                <label htmlFor="tags" className="blog-form_label">Tags</label>
-                <Input name="tags" id="tags" placeholder="Tags (comma-separated)" defaultValue={initialContent ? initialContent.blogs.tags : null} className="blog-form_input" />
-
-                <label htmlFor="categories" className="blog-form_label">Categories</label>
-                <select name="categories"
-                    id="categories"
-                    defaultValue={initialContent ? initialContent.blogs.categories : ""}
-                    className="border-[3px] border-black px-5 py-5 text-[18px] w-full rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700">
-                    <option value="" disabled>
-                        -- Select an option --
-                    </option>
-                    <option value="Literature">Literature</option>
-                    <option value="Technology">Technology</option>
-                    <option value="Science">Science</option>
-                    <option value="Programming">Programming</option>
-                    <option value="Computer Science">Computer Science</option>
-                    <option value="Lifestyle">LifeStyle</option>
-                    <option value="Business">Business</option>
-                </select>
-
-                {/* <div className="flex flex-col items-start gap-2">
-                    <label htmlFor="thumbnail-upload" className="blog-form_label">
-                        Upload Thumbnail
-                    </label>
-
-                    <input
-                        id="thumbnail-upload"
-                        type="file"
-                        accept="image/*"
-                        className="hidden"
-                        onChange={(e) => setThumbnail(e.target.files?.[0] || null)}
-                    />
-
-                    <label
-                        htmlFor="thumbnail-upload"
-                        className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl cursor-pointer hover:bg-blue-700 transition duration-200 shadow-md"
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1M12 12v6m0 0l-3-3m3 3l3-3M12 4v8"
-                            />
-                        </svg>
-                        Choose Image
-                    </label>
-                    <p className='text-gray-400'>Max File Size 4 MB-jpeg, png, gif allowed only</p>
-                </div> */}
-
-                 <label htmlFor="thumbnail-upload" className="blog-form_label">Thumbnail</label>
-                <Input name="thumbnail-upload" id="thumbnail-upload" placeholder="thumbnail-upload" defaultValue={initialContent ? initialContent.blogs.thumbnailUrl : null} onChange={(e) => setThumbnail(e.target.value)} className="blog-form_input" />
-
-
-
-                {/* <img src={thumbnail ? URL.createObjectURL(thumbnail) : initialContent ? initialContent.blogs.thumbnailUrl : null} alt="Thumbnail" className="object-cover rounded my-2 p-4 w-40 h-40" /> */}
-                <img src={thumbnail ? thumbnail : initialContent ? initialContent.blogs.thumbnailUrl : null} alt="Thumbnail" className="object-cover rounded my-2 p-4 w-40 h-40" />
-
-                <Button type="submit" className="blog-form_btn cursor-pointer my-4">{isUpdate?"Update Blog":"Submit Blog"}</Button>
-            </form>
+        {/* Form Submission */}
+        <div className="pt-6 border-t border-gray-300 dark:border-gray-800 flex justify-end">
+            <Button
+            type="submit"
+            className="bg-indigo-600 text-white font-semibold py-3 px-8 rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-200 ease-in-out cursor-pointer"
+            >
+            {isUpdate ? 'Update Article' : 'Publish Article'}
+            </Button>
+        </div>
+        </form>
 
             {loading && <Loader />}
         </>

@@ -85,7 +85,6 @@ export default async function Blog({ params }) {
       </section>
       <section className="section_container flex justify-center">
         <img
-          // src={data.blogs.thumbnailUrl}
           src={data.blogs.thumbnailUrl ? data.blogs.thumbnailUrl : '/thumbnailUrl.png'}
           alt="thumbnail"
           className="w-full sm:h-[400px] sm:w-auto h-auto rounded-xl"
@@ -114,9 +113,26 @@ export default async function Blog({ params }) {
             <p className="category-tag flex justify-center">{data.blogs.categories}</p>
             <span className="text-gray-400 "><Dot /></span>
             <p className="text-gray-400 flex gap-1"><Clock></Clock>{data.blogs.readingTime} read</p>
+
+            <span className="text-gray-400 "><Dot /></span>
+            
+          {/* expired index */}
+            {data.blogs.expireAt && (
+              <>
+                {Math.ceil((data.blogs.expireAt - Date.now()) / (1000 * 60 * 60 * 24)) <= 0 ? (
+                  <span className="bg-red-700 text-white px-4 py-1 rounded">EXPIRED</span>
+                ) : (
+                  <span className="bg-green-700 text-white px-4 py-1 rounded">
+                    Days left: {Math.ceil((data.blogs.expireAt - Date.now()) / (1000 * 60 * 60 * 24))}
+                  </span>
+                )}
+              </>
+            )}
+            
           </div>
         </div>
       </div>
+      
       <section className="flex justify-center items-center">
         <article
           className="max-w-4xl p-2 pb-4 border-dotted border-b-2 border-gray-300 tiptap"

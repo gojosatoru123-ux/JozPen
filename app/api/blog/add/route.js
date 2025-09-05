@@ -21,6 +21,7 @@ export async function POST(req) {
   const tags = getField('tags');
   const categories = getField('categories');
   const thumbnailUrl = getField('thumbnail-upload');
+  const expireAt = getField('expireAt') ? new Date(getField('expireAt')) : null;
 
   // const uploadDir = path.join(process.cwd(), 'public/uploads');
 
@@ -54,6 +55,7 @@ export async function POST(req) {
       tags,
       categories,
       thumbnailUrl,
+      expireAt,
       readingTime: `${readingTime} min`,
     });
     return NextResponse.json({ success: true });

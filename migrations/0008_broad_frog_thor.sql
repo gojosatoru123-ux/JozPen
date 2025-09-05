@@ -1,0 +1,1 @@
+ALTER TABLE "blogs" ADD COLUMN "expire_at" timestamp with time zone;

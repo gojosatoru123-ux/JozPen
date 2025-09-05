@@ -21,6 +21,7 @@ export const blogs = pgTable('blogs', {
   readingTime: varchar('reading_time', { length: 10 }),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow(),
+  expireAt: timestamp('expire_at', { withTimezone: true }),
 });
 
 export const followings = pgTable('followings',{

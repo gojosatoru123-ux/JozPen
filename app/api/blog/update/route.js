@@ -23,6 +23,8 @@ export async function PUT(request, { params }) {
     const tags = getField('tags');
     const categories = getField('categories');
     const thumbnailUrl = getField('thumbnail-upload');
+  const expireAt = getField('expireAt') ? new Date(getField('expireAt')) : null;
+
     // const thumbnail = formData.get('thumbnail'); // Could be File or empty
     
     // const uploadDir = path.join(process.cwd(), 'public/uploads');
@@ -58,6 +60,7 @@ export async function PUT(request, { params }) {
             tags,
             categories,
             thumbnailUrl,
+            expireAt,
             readingTime: `${readingTime} min`,
         };
 

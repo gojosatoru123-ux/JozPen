@@ -400,7 +400,7 @@ const AddBlogClient = ({ session, initialContent = null, isUpdate = false }) => 
             </label>
             <div className="mt-2 flex items-center gap-x-4">
                 <img 
-                src={thumbnail ? thumbnail : initialContent ? initialContent.blogs.thumbnailUrl : null} 
+                src={thumbnail || (initialContent?.blogs?.thumbnailUrl && initialContent.blogs.thumbnailUrl.trim() !== '') ? (thumbnail || initialContent.blogs.thumbnailUrl) : 'https://via.placeholder.com/150'} 
                 alt="Thumbnail Preview" 
                 className="h-24 w-24 rounded-lg object-cover dark:text-gray-600 border border-gray-300 dark:border-gray-800"
                 />

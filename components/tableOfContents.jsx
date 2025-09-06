@@ -54,13 +54,14 @@ const TableOfContents = () => {
                 {headings.map((heading) => (
                     <li
                         key={heading.id}
-                        className={`text-sm cursor-pointer transition-all duration-300 ease-in-out ${
+                        className={`text-sm cursor-pointer transition-all duration-300 ease-in-out truncate ${
                             activeId === heading.id
                                 ? 'font-bold text-blue-600'
                                 : 'text-gray-600 hover:text-blue-500'
                         }`}
                         style={{ marginLeft: `${(heading.level - 1) * 15}px` }}
                         onClick={() => scrollToHeading(heading.id)}
+                        title={heading.text}
                     >
                         {heading.text}
                     </li>

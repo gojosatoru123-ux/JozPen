@@ -1,12 +1,11 @@
 import Recommended from "@/components/Recommended"
+import TableOfContents from "@/components/tableOfContents"
 import { db } from "@/database/drizzle"
 import { blogs, usersTable } from "@/database/schema"
 import { eq } from "drizzle-orm"
-import { Clock, Dot } from "lucide-react"
-import Image from "next/image"
-import Link from "next/link"
 import { notFound } from "next/navigation"
-import TableOfContents from "@/components/tableOfContents"
+import BlogMetadata from "@/components/BlogMetadata"
+
 
 
 export async function generateMetadata({ params }) {
@@ -92,54 +91,16 @@ export default async function Blog({ params }) {
           className="w-full sm:h-[400px] sm:w-auto h-auto rounded-xl"
         />
       </section>
-      <div className="space-y-5 mt-10 max-w-4xl mx-auto p-2">
-        <div className="flex flex-between gap-5 items-center flex-wrap">
-          <Link
-            href={`/profile/${data.usersTable.id}`}
-            className="flex gap-2 items-center mb-3"
-          >
-            <Image
-              src={data.usersTable.profileUrl}
-              alt="avatar"
-              width={64}
-              height={64}
-              className="rounded-full drop-shadow-lg"
-            />
-
-            <div>
-              <p className="text-20-medium">@{data.usersTable.name}</p>
-            </div>
-          </Link>
-
-          <div className="flex gap-1 items-center justify-between w-screen sm:w-auto">
-            <p className="category-tag flex justify-center">{data.blogs.categories}</p>
-            <span className="text-gray-400 "><Dot /></span>
-            <p className="text-gray-400 flex gap-1"><Clock></Clock>{data.blogs.readingTime} read</p>
-
-            <span className="text-gray-400 "><Dot /></span>
-            
-          {/* expired index */}
-            {data.blogs.expireAt && (
-              <>
-                {Math.ceil((data.blogs.expireAt - Date.now()) / (1000 * 60 * 60 * 24)) <= 0 ? (
-                  <span className="bg-red-700 text-white px-4 py-1 rounded">EXPIRED</span>
-                ) : (
-                  <span className="bg-green-700 text-white px-4 py-1 rounded">
-                    Days left: {Math.ceil((data.blogs.expireAt - Date.now()) / (1000 * 60 * 60 * 24))}
-                  </span>
-                )}
-              </>
-            )}
-            
-          </div>
-        </div>
-      </div>
+      <BlogMetadata data={data} />
       <section className="flex gap-2 justify-center">
         <TableOfContents htmlContent={data.blogs.content}/>
         <article
           className="max-w-4xl p-2 pb-4 border-dotted border-b-2 border-gray-300 tiptap"
           dangerouslySetInnerHTML={{ __html: data.blogs.content }}
         />
+        {/* <div className="min-h-screen">
+          <AppearanceSettings />
+        </div> */}
       </section>
       <section className="flex flex-col items-center py-5">
         <Recommended></Recommended>

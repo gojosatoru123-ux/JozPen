@@ -12,7 +12,13 @@ const Navbar = async () => {
             <header className="px-5 py-3 shadow-sm font-work-sans bg-white text-black">
                 <nav className="flex justify-between items-center">
                     <Link href="/">
-                        <Image src="/logo.png" alt="logo" width={144} height={20} />
+                        <Image 
+                            src="/logo.png" 
+                            alt="logo" 
+                            width={144} 
+                            height={20}
+                            style={{ height: 'auto' }}
+                        />
                     </Link>
                     <div className="items-center gap-5 hidden sm:flex">
                         {session && session?.user ? (

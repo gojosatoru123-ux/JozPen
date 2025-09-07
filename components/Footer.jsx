@@ -13,7 +13,13 @@ const Footer = () => {
         {/* Logo + Description */}
         <div>
           <Link href="/" className="inline-block mb-4">
-            <Image src="/logo_footer.png" alt="Logo" width={140} height={30} />
+            <Image 
+              src="/logo_footer.png" 
+              alt="Logo" 
+              width={140} 
+              height={30}
+              style={{ width: 'auto' }}
+            />
           </Link>
           <p className="text-sm text-gray-400 max-w-xs">
           We’re building more than a platform — we’re building a space where knowledge meet people.

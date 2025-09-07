@@ -43,6 +43,7 @@ import ts from "highlight.js/lib/languages/typescript";
 import html from "highlight.js/lib/languages/xml";
 import Loader from './Loader';
 import MessageSlab from './MessageSlab';
+import { TimelineBodyNode, TimelineEntryNode, TimelineNode, TimelineTitleNode } from './timeLineNode';
 
 const lowlight = createLowlight(common);
 
@@ -61,6 +62,10 @@ const AddBlogClient = ({ session, initialContent = null, isUpdate = false }) => 
     const editor = useEditor({
         extensions: [
             Document,
+            TimelineNode,
+            TimelineBodyNode,
+            TimelineEntryNode,
+            TimelineTitleNode,
             Paragraph,
             Text,
             Heading,

@@ -360,7 +360,7 @@ body {
 }
 
 .tiptap table th {
-  background-color: red;
+  background-color: rgb(230, 230, 230);
   font-weight: bold;
   text-align: left;
 }

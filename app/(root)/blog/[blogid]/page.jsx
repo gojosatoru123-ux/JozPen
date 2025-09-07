@@ -96,7 +96,7 @@ export default async function Blog({ params }) {
       <section className="flex gap-2 justify-center">
         <TableOfContents htmlContent={data.blogs.content}/>
         <article
-          className="max-w-4xl p-2 pb-4 border-dotted border-b-2 border-gray-300 tiptap break-all"
+          className="max-w-4xl p-2 pb-4 border-dotted border-b-2 border-gray-300 tiptap break-words"
           dangerouslySetInnerHTML={{ __html: data.blogs.content }}
         />
         {/* <div className="min-h-screen">

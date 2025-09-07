@@ -175,45 +175,45 @@ const AddBlogClient = ({ session, initialContent = null, isUpdate = false }) => 
         onUpdate: ({ editor }) => {
             setContent(editor.getHTML());
         },
-        editorProps: {
-            handleKeyDown(view, event) {
-                const isCtrlOrCmd = event.metaKey || event.ctrlKey;
+        // editorProps: {
+        //     handleKeyDown(view, event) {
+        //         const isCtrlOrCmd = event.metaKey || event.ctrlKey;
 
-                if (event.key === "ArrowDown" && isCtrlOrCmd) {
-                    view.dom.dataset.forceShow = "true"; // set custom flag on editor DOM
-                    setShow(true);
-                    return true;
-                }
+        //         if (event.key === "ArrowDown" && isCtrlOrCmd) {
+        //             view.dom.dataset.forceShow = "true"; // set custom flag on editor DOM
+        //             setShow(true);
+        //             return true;
+        //         }
 
-                return false;
-            },
+        //         return false;
+        //     },
 
-            handleDOMEvents: {
-                mouseup(view) {
-                    // Prevent flicker caused by mouseup after Cmd+ArrowDown
-                    if (view.dom.dataset.forceShow === "true") {
-                        view.dom.dataset.forceShow = "false";
-                        return false;
-                    }
+        //     handleDOMEvents: {
+        //         mouseup(view) {
+        //             // Prevent flicker caused by mouseup after Cmd+ArrowDown
+        //             if (view.dom.dataset.forceShow === "true") {
+        //                 view.dom.dataset.forceShow = "false";
+        //                 return false;
+        //             }
 
-                    const isTextSelected = !view.state.selection.empty;
-                    setShow(isTextSelected);
-                    return false;
-                },
+        //             const isTextSelected = !view.state.selection.empty;
+        //             setShow(isTextSelected);
+        //             return false;
+        //         },
 
-                keyup(view) {
-                    // Prevent flicker caused by keyup after Cmd+ArrowDown
-                    if (view.dom.dataset.forceShow === "true") {
-                        view.dom.dataset.forceShow = "false";
-                        return false;
-                    }
+        //         keyup(view) {
+        //             // Prevent flicker caused by keyup after Cmd+ArrowDown
+        //             if (view.dom.dataset.forceShow === "true") {
+        //                 view.dom.dataset.forceShow = "false";
+        //                 return false;
+        //             }
 
-                    const isTextSelected = !view.state.selection.empty;
-                    setShow(isTextSelected);
-                    return false;
-                },
-            }
-        }
+        //             const isTextSelected = !view.state.selection.empty;
+        //             setShow(isTextSelected);
+        //             return false;
+        //         },
+        //     }
+        // }
 
     });
 
@@ -263,7 +263,8 @@ const AddBlogClient = ({ session, initialContent = null, isUpdate = false }) => 
 
     return (
         <>
-            {show && <RichTextToolbar editor={editor} />}
+            {/* {show && <RichTextToolbar editor={editor} />} */}
+            <RichTextToolbar editor={editor} />
             {error && <MessageSlab type={error.type} message={error.message} url={error.url} />}
 
         <form

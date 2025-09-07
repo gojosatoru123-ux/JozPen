@@ -85,11 +85,12 @@ export default async function Blog({ params }) {
         <p className="sub-heading !max-w-5xl">{data.blogs.excerpt}</p>
       </section>
       <section className="section_container flex justify-center">
-        <img
-          src={data.blogs.thumbnailUrl ? data.blogs.thumbnailUrl : '/thumbnailUrl.png'}
+        {data.blogs.thumbnailUrl &&  <img
+          src={data.blogs.thumbnailUrl}
           alt="thumbnail"
           className="w-full sm:h-[400px] sm:w-auto h-auto rounded-xl"
-        />
+        />}
+       
       </section>
       <BlogMetadata data={data} />
       <section className="flex gap-2 justify-center">

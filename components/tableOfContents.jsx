@@ -48,7 +48,7 @@ const TableOfContents = () => {
     };
 
     return (
-        <div className="hidden md:block table-of-contents p-6 rounded-xl sticky top-24 h-[300px]">
+        <div className="hidden md:block table-of-contents p-6 rounded-xl sticky top-24 h-[300px] max-w-[300px]">
             <h4 className="font-semibold text-lg text-gray-900 mb-4 border-b pb-2">On this page</h4>
             <ul className="list-none space-y-2">
                 {headings.map((heading) => (

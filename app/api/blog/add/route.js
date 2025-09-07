@@ -9,6 +9,9 @@ export async function POST(req) {
   if (!session || !session.user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
+  if(session && !session.isAuthorized){
+    return NextResponse.json({ error: "You are not authorized to add blogs. Please contact admin." }, { status: 403 });
+  }
   const formData = await req.formData();
 
   const getField = (name) => formData.get(name)?.toString() || '';

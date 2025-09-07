@@ -64,6 +64,13 @@
       "when": 1756932614863,
       "tag": "0008_broad_frog_thor",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1757262417347,
+      "tag": "0009_glossy_blink",
+      "breakpoints": true
     }
   ]
 }

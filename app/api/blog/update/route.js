@@ -13,6 +13,9 @@ export async function PUT(request, { params }) {
     if (!session || !session.user) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
+    if(session && !session.isAuthorized){
+    return NextResponse.json({ error: "You are not authorized to add blogs. Please contact admin." }, { status: 403 });
+    }
     const formData = await request.formData();
     const getField = (name) => formData.get(name)?.toString() || '';
     

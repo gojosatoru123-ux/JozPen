@@ -9,7 +9,7 @@ const protectedPatterns = [
     /^\/blog\/create$/,              // blog creation
     /^\/bookmark$/,                  // bookmarks
     /^\/profile\/[^\/]+$/,           // dynamic profile pages
-    /^\/blog\/[^\/]+$/,              // dynamic blog pages like /blog/123
+    // /^\/blog\/[^\/]+$/,              // dynamic blog pages like /blog/123
 ];
 const publicRoutes = ['/about', '/termsandconditions', '/privacypolicy'];
 

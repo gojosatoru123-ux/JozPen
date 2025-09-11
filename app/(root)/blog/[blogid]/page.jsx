@@ -5,6 +5,8 @@ import { blogs, usersTable } from "@/database/schema"
 import { eq } from "drizzle-orm"
 import { notFound } from "next/navigation"
 import BlogMetadata from "@/components/BlogMetadata"
+import { auth } from "@/auth"
+import ReadWithoutLogin from "@/components/ReadWithoutLogin"
 
 
 
@@ -57,6 +59,7 @@ export async function generateMetadata({ params }) {
 
 export default async function Blog({ params }) {
   const id = (await params).blogid
+  const session = await auth();
   if (!id) return notFound();
   // since it is a server component so we have to pass full path of api to render the page on server and rendering here would be beneficial for seo
   // const res = await fetch(`http://localhost:3000/api/blog/view?blogid=${id}`, {
@@ -77,7 +80,7 @@ export default async function Blog({ params }) {
   const data = res[0]
   return (
     <>
-    
+
       <section className="pink_container pattern">
         <p className="tag">{new Date(data.blogs.createdAt).toDateString()}</p>
 
@@ -85,20 +88,27 @@ export default async function Blog({ params }) {
         <p className="sub-heading !max-w-5xl">{data.blogs.excerpt}</p>
       </section>
       <section className="section_container flex justify-center">
-        {data.blogs.thumbnailUrl &&  <img
+        {data.blogs.thumbnailUrl && <img
           src={data.blogs.thumbnailUrl}
           alt="thumbnail"
           className="w-full sm:h-[400px] sm:w-auto h-auto rounded-xl"
         />}
-       
+
       </section>
       <BlogMetadata data={data} />
       <section className="flex gap-2 justify-center">
-        <TableOfContents htmlContent={data.blogs.content}/>
-        <article
-          className="max-w-4xl p-2 pb-4 border-dotted border-b-2 border-gray-300 tiptap break-words"
-          dangerouslySetInnerHTML={{ __html: data.blogs.content }}
-        />
+        <TableOfContents htmlContent={data.blogs.content} />
+        {session && session?.user ?
+          <article
+            className="max-w-4xl p-2 pb-4 border-dotted border-b-2 border-gray-300 tiptap break-words"
+            dangerouslySetInnerHTML={{ __html: data.blogs.content }}
+          /> : <div className="max-w-4xl p-2 pb-4 border-dotted border-b-2 border-gray-300">
+            <article
+              className=" tiptap break-words"
+              dangerouslySetInnerHTML={{ __html: data.blogs.content.slice(0, 2000) }}
+            />
+            <ReadWithoutLogin />
+          </div>}
         {/* <div className="min-h-screen">
           <AppearanceSettings />
         </div> */}

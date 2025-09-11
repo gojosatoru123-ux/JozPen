@@ -36,15 +36,15 @@ const HomePageSections = () => {
     }, []);
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen">
             {loading && <Loader2 />}
             {error && <MessageSlab type={error.type} message={error.message} url={error.url} />}
             {mainData && (
                 <>
                     {/* careerDashboard */}
-                    {/* <CareerDashboard /> */}
+                    <CareerDashboard />
                     {/* Featured Posts Section */}
-                    <section className="py-12 sm:py-16 bg-gradient-to-b from-gray-50 to-white">
+                    <section className="py-12 sm:py-16">
                         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                             <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-8 text-center">
                                 Featured Posts
@@ -112,7 +112,7 @@ const HomePageSections = () => {
                     </section>
 
                     {/* Recently Added Posts Section */}
-                    <section className="py-12 sm:py-16 bg-gray-50">
+                    <section className="py-12 sm:py-16">
                         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                             <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-8 text-center">
                                 Recently Added Posts
@@ -122,7 +122,7 @@ const HomePageSections = () => {
                     </section>
 
                     {/* Categories Section */}
-                    <section className="py-12 sm:py-16 bg-white">
+                    <section className="py-12 sm:py-16">
                         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                             <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-8 text-center">
                                 Browse By Category
@@ -146,7 +146,7 @@ const HomePageSections = () => {
                     </section>
 
                     {/*NewsletterSession*/}
-                    <section className="py-12 sm:py-16 bg-gray-50">
+                    <section className="py-12 sm:py-16 ">
                         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                             <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-8 text-center">
                                 Subscribe to our Newsletter

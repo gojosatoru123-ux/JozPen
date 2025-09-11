@@ -23,8 +23,8 @@ const FeatureCard = ({ title, subtitle1, subtitle2, bgColor, textColor, illustra
 // Main App Component
 export default function App() {
   return (
-    <div className="bg-gray-50 min-h-screen font-sans flex items-center justify-center p-4">
-      <main className="bg-white rounded-3xl shadow-2xl w-full max-w-7xl p-8 md:p-12">
+    <div className=" min-h-screen font-sans flex items-center justify-center p-4">
+      <main className=" rounded-3xl shadow-2xl w-full max-w-7xl p-8 md:p-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
           
           {/* Left Column */}

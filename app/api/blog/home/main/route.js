@@ -7,7 +7,7 @@ import { NextResponse } from "next/server";
 export async function GET(){
     try{
     const session = await auth();
-    const res= await db.select().from(blogs).where(eq(blogs.author,'dindayalsinha301@gmail.com')).orderBy(desc(blogs.createdAt)).limit(1).innerJoin(usersTable,eq(usersTable.email,blogs.author))
+    const res= await db.select().from(blogs).where(eq(blogs.author,'aisehibanayahai00@gmail.com')).orderBy(desc(blogs.createdAt)).limit(1).innerJoin(usersTable,eq(usersTable.email,blogs.author))
     if(!res){
         return NextResponse.json({ success: false, error: "No blogs found" })
     }

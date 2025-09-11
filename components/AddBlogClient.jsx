@@ -393,7 +393,7 @@ const AddBlogClient = ({ session, initialContent = null, isUpdate = false }) => 
                 <option value="Science">Science</option>
                 <option value="Programming">Programming</option>
                 <option value="Computer Science">Computer Science</option>
-                <option value="Lifestyle">Lifestyle</option>
+                <option value="Contest">Contest</option>
                 <option value="Business">Business</option>
             </select>
             </div>

@@ -48,19 +48,20 @@ const TableOfContents = () => {
     };
 
     return (
-        <div className="hidden md:block table-of-contents p-6 rounded-xl sticky top-24 h-[300px]">
+        <div className="hidden md:block table-of-contents p-6 rounded-xl sticky top-24 h-[300px] max-w-[300px]">
             <h4 className="font-semibold text-lg text-gray-900 mb-4 border-b pb-2">On this page</h4>
             <ul className="list-none space-y-2">
                 {headings.map((heading) => (
                     <li
                         key={heading.id}
-                        className={`text-sm cursor-pointer transition-all duration-300 ease-in-out ${
+                        className={`text-sm cursor-pointer transition-all duration-300 ease-in-out truncate ${
                             activeId === heading.id
                                 ? 'font-bold text-blue-600'
                                 : 'text-gray-600 hover:text-blue-500'
                         }`}
                         style={{ marginLeft: `${(heading.level - 1) * 15}px` }}
                         onClick={() => scrollToHeading(heading.id)}
+                        title={heading.text}
                     >
                         {heading.text}
                     </li>

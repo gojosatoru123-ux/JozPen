@@ -26,7 +26,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       await db.insert(usersTable).values({
         name,
         email,
-        profileUrl
+        profileUrl,
+        isAuthorized: false,
       })
       return true;
     },
@@ -34,13 +35,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (account && profile) {
         const existing = await db.select().from(usersTable).where(eq(usersTable.email, profile.email))
         if (existing.length > 0) {
-          token.id = existing[0].id
+          token.id = existing[0].id, token.isAuthorized = existing[0].isAuthorized
         }
       }
       return token
     },
     async session({ session,token }) {
-      Object.assign(session, { id: token.id });
+      Object.assign(session, { id: token.id , isAuthorized: token.isAuthorized});
       return session;
     },
     async redirect({ url, baseUrl }) {

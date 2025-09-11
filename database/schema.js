@@ -5,7 +5,8 @@ export const usersTable = pgTable('usersTable', {
   name: varchar('name').notNull(),
   email: varchar('email').notNull().unique(),
   joinedAt: date('joined_at', { withTimeZone: true, }).notNull().defaultNow(),
-  profileUrl: text('profile_url')
+  profileUrl: text('profile_url'),
+  isAuthorized: boolean('is_authorized').notNull().default(false),
 })
 // format of column name is a_b not camel Case
 export const blogs = pgTable('blogs', {
@@ -21,6 +22,7 @@ export const blogs = pgTable('blogs', {
   readingTime: varchar('reading_time', { length: 10 }),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow(),
+  expireAt: timestamp('expire_at', { withTimezone: true }),
 });
 
 export const followings = pgTable('followings',{

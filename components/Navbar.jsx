@@ -12,12 +12,18 @@ const Navbar = async () => {
             <header className="px-5 py-3 shadow-sm font-work-sans bg-white text-black">
                 <nav className="flex justify-between items-center">
                     <Link href="/">
-                        <Image src="/logo.png" alt="logo" width={144} height={20} />
+                        <Image 
+                            src="/logo.png" 
+                            alt="logo" 
+                            width={144} 
+                            height={20}
+                            style={{ height: 'auto' }}
+                        />
                     </Link>
                     <div className="items-center gap-5 hidden sm:flex">
                         {session && session?.user ? (
                             <>
-                                <Navbarmenu/>
+                                <Navbarmenu session={session}/>
                                 <form action={async () => {
                                     "use server";
                                     await signOut({ redirectTo: "/" })
@@ -41,7 +47,7 @@ const Navbar = async () => {
                     </div>
                 </nav>
                 {(session && session?.user) && <div className="fixed md:hidden bottom-0 left-0 w-screen z-21 bg-white p-2 flex justify-between items-center">
-                    <Navbarmenumobile/>
+                    <Navbarmenumobile session={session}/>
                     <form action={async () => {
                         "use server";
                         await signOut({ redirectTo: "/" })

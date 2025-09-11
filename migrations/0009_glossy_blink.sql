@@ -1,0 +1,1 @@
+ALTER TABLE "usersTable" ADD COLUMN "is_authorized" boolean DEFAULT false NOT NULL;

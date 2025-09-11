@@ -321,7 +321,7 @@ const RichTextToolbar = ({ editor }) => {
                     show={true}
                 />
             </div>
-            <div className="flex flex-col gap-2">
+            {/* <div className="flex flex-col gap-2">
                 <span className="text-xs text-gray-500 font-semibold px-2">Timeline entry</span>
                 <ToolbarButton
                     onClick={()=>editor.chain().focus().addTimelineEntry().run()}
@@ -330,7 +330,7 @@ const RichTextToolbar = ({ editor }) => {
                     label="Add Timeline Entry"
                     show={true}
                 />
-            </div>
+            </div> */}
 
             {/* Image Upload */}
             <button

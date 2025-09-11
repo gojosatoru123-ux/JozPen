@@ -6,7 +6,7 @@ const TermsAndConditions = () => {
       <h1 className="text-4xl font-bold mb-6 text-gray-800">Terms and Conditions</h1>
       <p className="text-gray-600 mb-4">
         These terms govern your use of our blog platform, covering categories
-        like science, tech, sports, education, lifestyle, and more. By using
+        like science, tech, sports, education, contest, and more. By using
         our services, you agree to abide by these terms.
       </p>
 
